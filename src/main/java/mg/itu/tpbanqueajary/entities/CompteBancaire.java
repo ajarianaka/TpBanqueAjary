@@ -24,10 +24,6 @@ public class CompteBancaire implements Serializable {
 
     private String nom;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setSolde(int solde) {
         this.solde = solde;
     }
