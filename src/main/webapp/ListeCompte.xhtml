@@ -47,6 +47,15 @@
                                 <h:graphicImage name="images/del.png" /> 
                             </h:commandLink>
                         </p:column>
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="Historique opérations"/>
+                            </f:facet>
+                            <h:link title="modifier" outcome="operations?id=#{item.id}">
+                                    Details 
+                                </h:link>
+                            
+                        </p:column>
                     </p:dataTable>
                 </h:form>
             </ui:define>
