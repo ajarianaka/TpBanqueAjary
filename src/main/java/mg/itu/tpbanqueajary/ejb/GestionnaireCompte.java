@@ -64,4 +64,14 @@ public class GestionnaireCompte {
         update(source);
         update(destination);
     }
+
+    public void deposer(CompteBancaire compteBancaire, int montant) {
+        compteBancaire.deposer(montant);
+        update(compteBancaire);
+    }
+    
+    public void retirer(CompteBancaire compteBancaire, int montant) {
+        compteBancaire.retirer(montant);
+        update(compteBancaire);
+    }
 }
