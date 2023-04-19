@@ -13,6 +13,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.validator.ValidatorException;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
+import jakarta.persistence.OptimisticLockException;
 import java.io.Serializable;
 import mg.itu.tpbanqueajary.ejb.GestionnaireCompte;
 import mg.itu.tpbanqueajary.entities.CompteBancaire;
@@ -32,12 +33,13 @@ public class Mouvement implements Serializable {
     private CompteBancaire compte;
     private String typeMouvement;
     private int montant;
+
     /**
      * Creates a new instance of Mouvement
      */
     public Mouvement() {
     }
-    
+
     public int getMontant() {
         return montant;
     }
@@ -69,7 +71,7 @@ public class Mouvement implements Serializable {
     public void loadCompte() {
         compte = gestionnaireCompte.getCompte(id);
     }
-    
+
     public String enregistrerMouvement() {
         try {
             if (typeMouvement.equals("ajout")) {
@@ -79,13 +81,21 @@ public class Mouvement implements Serializable {
             }
             Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
             return "ListeCompte?faces-redirect=true";
-        }
-        catch(EJBException ex){
-            Util.addFlashInfoMessage("l'entité a deja été modifié par une tierce personne");
-            return "ListeCompte?faces-redirect=true";
+        } catch (EJBException ex) {
+            Throwable cause = ex.getCause();
+            if (cause != null) {
+                if (cause instanceof OptimisticLockException) {
+                    Util.messageErreur("Le compte de " + compte.getNom() + " a été modifié ou supprimé par un autre utilisateur !");
+                } else { // Afficher le message de ex si la cause n'est pas une OptimisticLockException
+                    Util.messageErreur(cause.getMessage());
+                }
+            } else { // Pas de cause attachée à l'EJBException
+                Util.messageErreur(ex.getMessage());
+            }
+            return null;
         }
     }
-    
+
     public void validateSolde(FacesContext fc, UIComponent composant, Object valeur) {
         UIInput composantTypeMouvement = (UIInput) composant.findComponent("typeMouvement");
         // Sans entrer dans les détails, il faut parfois utiliser
