@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 import mg.itu.tpbanqueajary.ejb.GestionnaireCompte;
 import mg.itu.tpbanqueajary.entities.CompteBancaire;
+import mg.itu.tpbanqueajary.jsf.util.Util;
 
 /**
  *
@@ -38,4 +39,13 @@ public class ListeComptes implements Serializable {
         return Comptes;
     }
 
+    public String supprimerCompte(CompteBancaire c) {
+        if (c != null) {
+            gestionnaireCompte.supprimerCompte(c);
+            Util.addFlashInfoMessage("suppression effectuée");
+            return "ListeCompte?faces-redirect=true";
+        }
+        Util.addFlashInfoMessage("suppression non effectuée");
+        return null;
+    }
 }
