@@ -16,6 +16,7 @@
 
             <ui:define name="content">
                 <h:form>
+                    <h:messages/>
                     <p:dataTable value="#{listeComptes.allComptes}"
                                  rows="10" var="item" widgetVar="customerTable"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">                  
