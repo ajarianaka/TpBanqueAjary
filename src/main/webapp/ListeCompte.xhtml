@@ -7,9 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <body>
-
         <ui:composition template="./WEB-INF/templates/template_default.xhtml">
-
             <ui:define name="top">
                 Liste des comptes
             </ui:define>
@@ -42,6 +40,9 @@
                             <f:facet name="header">
                                 <h:outputText value="Action"/>
                             </f:facet>
+                            <h:link title="modifier" outcome="modifCompte?id=#{item.id}">
+                                    <h:graphicImage name="images/edit.png" /> 
+                                </h:link>
                             <h:commandLink title="supprimer" action="#{listeComptes.supprimerCompte(item)}">
                                 <h:graphicImage name="images/del.png" /> 
                             </h:commandLink>
@@ -49,8 +50,6 @@
                     </p:dataTable>
                 </h:form>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

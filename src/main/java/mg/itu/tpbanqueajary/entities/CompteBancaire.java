@@ -28,6 +28,10 @@ public class CompteBancaire implements Serializable {
         this.solde = solde;
     }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     public String getNom() {
         return nom;
     }
